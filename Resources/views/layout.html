@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>{PAGE_TITLE}</title>
+		<meta name="viewport" content="width=device-width">
+		<link rel="shortcut icon" type="image/png" href="/charybde/media/layout/favicon.png">
+{CSS_CALLS}
+<link rel="stylesheet" href="/theme/styles.css?{ASSETS_VERSION}" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+{OPENGRAPH}
+{MATOMO}
+	</head>
+
+	<body>
+
+		<div id="wrapper" class="container">
+
+			<header id="header" class="center hidden-print">
+				<a href="/" class="hidden-print"><img src="/charybde/media/layout/header.png" alt="Librairie Charybde"></a>
+            </header>
+
+			<div id="searchBox" class="hidden-print">
+				<form action="/pages/search" id="search">
+					<fieldset>
+						<input type="text" placeholder="Titre, auteur, éditeur, ISBN, mot-clé..." name="q" value="">
+						<button class="btn btn-default btn-sm" type="submit">Recherche</button>
+						<span id="myCart"><button class="btn btn-default btn-sm"><i class="fa fa-shopping-cart"></i> Panier vide</button></span>
+					</fieldset>
+				</form>
+			</div>
+
+			<nav id="navbar">
+                <a href="/">Accueil</a>
+                <!--a href="/pages/promo" class="red">-75%</a//-->
+				<a href="/blog/">Actualité</a>
+				<a href="https://charybde2.wordpress.com/">Blog</a>
+				<a href="/pages/charybde-tv">TV</a>
+				<a href="/pages/evenements">Évènements</a>
+				<a href="/blog/coups-de-coeur/">Coups de cœur</a>
+				<a href="/pages/vente-en-ligne">Vente en ligne</a>
+				<a href="/pages/parutions">Parutions</a>
+				<a href="/pages/occasions">Occasions</a>
+				<a href="/pages/librairie">La librairie</a>
+				<a href="/pages/informations-pratiques" class="hidden-lg hidden-md">Infos pratiques</a>
+				<a href="/contact/">Contact</a>
+			</nav>
+
+            <div class="row">
+
+                <section id="main" class="container col-md-9">{PAGE_CONTENT}</section>
+
+                <aside class="col-md-3 visible-lg visible-md">
+
+                    <section id="infos" class="container-fluid hidden-print">
+                        <h3>Librairie Charybde</h3>
+                        <p>Ground Control</p>
+                        <p>
+                            81 rue du Charolais<br>
+                            75012 Paris<br>
+                            09.54.33.05.71<br>
+                        </p>
+                        <p>
+                            M° Gare de Lyon
+                        </p>
+
+                        <a href="http://maps.google.fr/maps?gcx=c&amp;q=Librairie+Charybde&amp;um=1&amp;ie=UTF-8&amp;hl=fr&amp;sa=N&amp;tab=wl"><img src="/charybde/media/layout/map.png" alt="Venir chez Charybde"></a>
+
+                        <h3>Horaires</h3>
+                        <p>
+                            Mer. Jeu. Ven. Sam. Dim.<br/>
+                            12h - 23h<br/>
+                            Fermeture lundi et mardi.
+                        </p>
+
+                        <h3>Newsletter</h3>
+                        <p class="left">Tenez-vous au courant de l'actualité, des évènements et des coups de cœurs de la librairie.</p>
+                        <form action="/mailing/subscribe" method="post">
+                            <fieldset class="center">
+                                <input type="email" placeholder="Votre adresse e-mail..." name="email" class="form-control">
+                                <button class="btn btn-info btn-sm btn-block" type="submit">S'abonner</button>
+                            </fieldset>
+                        </form>
+                    </section>
+
+                </aside>
+
+            </div>
+
+			<footer class="row hidden-print"><a href="http://www.biblys.fr/"><img src="/charybde/media/layout/biblys.png" alt="Propulsé par Biblys"></a></footer>
+
+		</div>
+
+{ANALYTICS_TRACKER}
+{JS_CALLS}
+
+	</body>
+</html>
