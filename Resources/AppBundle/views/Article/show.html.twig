@@ -1,0 +1,195 @@
+{# Pas fini le refactor faute de temps le 26/09 #}
+
+{# Get linked posts #}
+{# set posts = getPosts({'article_id': article.id, 'category_id': 3}) #}
+
+	<article class="article"> <header>
+		{% if article.has('cycle') %}
+			{{ article.cycle.name }}
+		{% endif %}
+		<h1>{{article.title}}</h1>
+		<p class="authors">de
+			{% for author in article.authors %}
+				{% if author.job_name == 'Auteur' %}
+					<a href="{{people.url}}">{{people.first_name ~ ' ' ~ people.last_name}}</a>
+
+				{% endif %}
+			{% endfor %}
+		</p>
+	</header>
+
+
+	<div class="row">
+
+		{% if article.hasCover %}
+
+			<div class="col-sm-3 col-xs-6 center">
+				{{ article.coverTag({ size: 'w200', class: 'cover' })|raw }}
+			</div>
+
+		{% endif %}
+
+		<div class="col-sm-5 col-xs-6">
+
+			<p>Prix éditeur :
+				{{ article.price|currency(true)|raw }}</p>
+			<p>Collection :
+				<a href="{{article.collection.url}}">{{article.collection.name}}</a>
+			</p>
+			<p>Éditeur :
+				<a href="{{article.publisher.url}}">{{article.publisher.name}}</a>
+			</p>
+			<p>{{ article.ean ? 'EAN : ' ~ article.ean }}</p>
+			{# article.isbn ? 'ISBN : <p>' ~ article.isbn ~ '</p>' #}
+			<p>{{ article.pubdate ? 'Parution : ' ~ article.pubdate|date('j f Y') }}</p>
+			<p>{{ article.pages ? 'Pagination : ' ~ article.pages ~ ' p.' }}</p>
+			<p>{{ article.has('shaping') ? 'Façonnage : ' ~ article.shaping }}</p>
+			<p>{{ article.weight ? 'Poids : ' ~ article.weight ~ ' g.' }}</p>
+
+		</div>
+
+		<div class="col-sm-4 col-xs-12 container">
+
+			<div class="center actions">
+				{% set newCopy = article.getCheapestAvailableItem('new') %}
+				{% if newCopy %}
+
+					<p class="center price">
+						<span class="green">Neuf</span>
+						{{ newCopy.selling_price|currency(true)|raw }}</p>
+					<p class="center">
+						<a class="button add_to_cart event" data-type="stock" data-id="{{ newCopy.id }}" title="Commandez <em>{{article.title}}</em> ou retirez-le en magasin.">
+							<i class="fa fa-shopping-cart"></i>
+							Ajouter au panier</a>
+					</p>
+					<br>
+
+				{% endif %}
+
+				{% set usedCopies = article.getAvailableItems('used') %}
+				{% if usedCopies %}
+
+					<p class="center price">
+						<span class="orange">{{ usedCopies|length }}
+							occasion{{ usedCopies|length > 1 ? 's' }}</span>
+						<br>à partir de
+						{{ usedCopies.0.selling_price|currency(true)|raw }}</p>
+					<p class="center">
+						<a href="#stock" class="button">Voir toutes les offres</a>
+					</p>
+					<br>
+
+				{% endif %}
+
+				<p class="center">
+					<button data-wish="{{article.id}}" class="event" title="Partagez votre liste d'envies pour vous faire offrir des livres !">
+						{% if article.isInWishlist() %}
+							<i class="fa fa-heart red"></i>
+							Dans mes envies
+						{% else %}
+							<i class="fa fa-heart-o"></i>
+							Ajouter à mes envies
+						{% endif %}
+					</button>
+				</p>
+
+				<p class="center">
+					<button data-alert="{{article.id}}" class="event" title="Soyez averti par e-mail quand d'autres exemplaires sont disponibles.">
+						{% if article.isInAlerts() %}
+							<i class="fa fa-bell orange"></i>
+							Dans mes alertes
+						{% else %}
+							<i class="fa fa-bell-o"></i>
+							Créer une alerte
+						{% endif %}
+					</button>
+				</p>
+
+				<div class='shareaholic-canvas' data-app='share_buttons' data-app-id='7463781'></div>
+			</div>
+		</div>
+
+	</div>
+
+	{#% if article.posts %}
+						
+								{% for post in article.posts %}
+						
+									<article class="charybde-border">
+										<h2>Coup de coeur de
+											<a href="/blog/{{ post.author.slug }}">{{ post.author }}</a>
+										</h2>
+										{{ post.content|raw }}
+									</article>
+						
+								{% endfor %}
+						
+							{% endif %#}
+
+
+	{% if article.summary %}
+
+		<div>
+			<h2>Quatrième de couverture</h2>
+			{{article.summary|raw}}
+		</div>
+
+	{% endif %}
+
+	{% if article.contents %}
+
+		<div>
+			<h2>Sommaire</h2>
+			{{article.contents|raw}}
+		</div>
+
+	{% endif %}
+
+	<h2 id="stock">Tous les exemplaires disponibles</h2>
+
+	<table class="stock">
+
+		<tbody>
+
+			{% if usedCopies %}
+
+				<tr>
+					<td></td>
+					<td>Ref.
+						{{ newCopy.0.id }}</td>
+					<td class="green">Neuf</td>
+					<td>{{ newCopy.0.selling_price_euros|raw }}</td>
+					<td>
+						<button class="add_to_cart event btn btn-primary" data-type="stock" data-id="{{ newCopies.0.id }}">
+							<i class="fa fa-shopping-cart"></i>
+							Ajouter au panier</button>
+					</td>
+				</tr>
+
+			{% endif %}
+
+			{% for stock in usedCopies %}
+
+				<tr>
+					<td>
+						<a href="{{ stock.cover }}" rel="fancybox"><img src="{{ stock.cover }}" width="50" alt=""></a>
+					</td>
+					<td>Ref.
+						{{ stock.id }}</td>
+					<td class="orange">{{ stock.condition }}<br>{{ stock.condition_details }}</td>
+					<td>{{ stock.selling_price_euros|raw }}</td>
+					<td>
+						<button class="add_to_cart event btn btn-primary" data-type="stock" data-id="{{ stock.id }}">
+							<i class="fa fa-shopping-cart"></i>
+							Ajouter au panier</button>
+					</td>
+				</tr>
+
+			{% endfor %}
+
+		</tbody>
+
+	</table>
+
+
+</article>
