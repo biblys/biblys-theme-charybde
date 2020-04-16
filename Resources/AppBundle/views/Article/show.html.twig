@@ -1,18 +1,14 @@
-{# Pas fini le refactor faute de temps le 26/09 #}
-
-{# Get linked posts #}
-{# set posts = getPosts({'article_id': article.id, 'category_id': 3}) #}
-
-	<article class="article"> <header>
+<article class="article">
+	<header>
 		{% if article.has('cycle') %}
 			{{ article.cycle.name }}
 		{% endif %}
 		<h1>{{article.title}}</h1>
 		<p class="authors">de
-			{% for author in article.authors %}
-				{% if author.job_name == 'Auteur' %}
-					<a href="{{people.url}}">{{people.first_name ~ ' ' ~ people.last_name}}</a>
-
+			{% for author in article.getAuthors() %}
+				<a href="{{ path('people_show', { slug: author.url }) }}">
+					{{ author.name }}</a>
+				{% if not loop.last %},
 				{% endif %}
 			{% endfor %}
 		</p>
@@ -58,9 +54,7 @@
 						<span class="green">Neuf</span>
 						{{ newCopy.selling_price|currency(true)|raw }}</p>
 					<p class="center">
-						<a class="button add_to_cart event" data-type="stock" data-id="{{ newCopy.id }}" title="Commandez <em>{{article.title}}</em> ou retirez-le en magasin.">
-							<i class="fa fa-shopping-cart"></i>
-							Ajouter au panier</a>
+						{{ newCopy.cartButton('Ajouter au panier')|raw }}
 					</p>
 					<br>
 
