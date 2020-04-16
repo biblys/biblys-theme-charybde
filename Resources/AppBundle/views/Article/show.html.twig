@@ -41,10 +41,10 @@
 			</p>
 			<p>{{ article.ean ? 'EAN : ' ~ article.ean }}</p>
 			{# article.isbn ? 'ISBN : <p>' ~ article.isbn ~ '</p>' #}
-			<p>{{ article.pubdate ? 'Parution : ' ~ article.pubdate|date('j f Y') }}</p>
-			<p>{{ article.pages ? 'Pagination : ' ~ article.pages ~ ' p.' }}</p>
+			<p>{{ article.has('pubdate') ? 'Parution : ' ~ article.pubdate|date('j f Y') }}</p>
+			<p>{{ article.has('pages') ? 'Pagination : ' ~ article.pages ~ ' p.' }}</p>
 			<p>{{ article.has('shaping') ? 'Façonnage : ' ~ article.shaping }}</p>
-			<p>{{ article.weight ? 'Poids : ' ~ article.weight ~ ' g.' }}</p>
+			<p>{{ article.has('weight') ? 'Poids : ' ~ article.weight ~ ' g.' }}</p>
 
 		</div>
 
@@ -111,42 +111,39 @@
 
 	</div>
 
-	{#% if article.posts %}
-						
-								{% for post in article.posts %}
-						
-									<article class="charybde-border">
-										<h2>Coup de coeur de
-											<a href="/blog/{{ post.author.slug }}">{{ post.author }}</a>
-										</h2>
-										{{ post.content|raw }}
-									</article>
-						
-								{% endfor %}
-						
-							{% endif %#}
+	{% if article.posts %}
+
+		{% for post in article.posts %}
+
+			<article class="charybde-border">
+				<h2>Coup de coeur de
+					<a href="/blog/{{ post.author.slug }}">{{ post.author.screen_name }}</a>
+				</h2>
+				{% if post.has('content') %}
+					{{ post.content|raw }}
+				{% endif %}
+			</article>
+
+		{% endfor %}
+
+	{% endif %}
 
 
-	{% if article.summary %}
+	{% if article.has('summary') %}
 
 		<div>
 			<h2>Quatrième de couverture</h2>
 			{{article.summary|raw}}
 		</div>
-
 	{% endif %}
-
-	{% if article.contents %}
+	{% if article.has('contents') %}
 
 		<div>
 			<h2>Sommaire</h2>
 			{{article.contents|raw}}
 		</div>
-
 	{% endif %}
-
 	<h2 id="stock">Tous les exemplaires disponibles</h2>
-
 	<table class="stock">
 
 		<tbody>
@@ -188,8 +185,5 @@
 			{% endfor %}
 
 		</tbody>
-
 	</table>
-
-
 </article>
