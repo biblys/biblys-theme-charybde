@@ -107,7 +107,7 @@
 
 	{% if article.posts %}
 
-		{% for post in article.posts %}
+		{% for post in article.posts|filter(post => post) %}
 
 			<article class="charybde-border">
 				<h2>Coup de coeur de
@@ -181,3 +181,19 @@
 		</tbody>
 	</table>
 </article>
+
+{% if app.user.isAdmin() %}
+	<div class="admin">
+		<p>Article n°
+			{{ article.id }}</p>
+		<p>
+			<a href="/pages/adm_article?id={{ article.id }}">modifier</a>
+		</p>
+		<p>
+			<a href="/pages/adm_stocks?article_id={{ article.id }}">stock</a>
+		</p>
+		<p>
+			<a href="/pages/adm_stock?add={{ article.id }}">ajouter</a>
+		</p>
+	</div>
+{% endif %}
