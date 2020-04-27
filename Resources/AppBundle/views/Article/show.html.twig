@@ -147,11 +147,11 @@
 				<tr>
 					<td></td>
 					<td>Ref.
-						{{ newCopy.0.id }}</td>
+						{{ usedCopies.0.id }}</td>
 					<td class="green">Neuf</td>
-					<td>{{ newCopy.0.selling_price_euros|raw }}</td>
+					<td>{{ usedCopies.0.selling_price|currency(true)|raw }}</td>
 					<td>
-						<button class="add_to_cart event btn btn-primary" data-type="stock" data-id="{{ newCopies.0.id }}">
+						<button class="add_to_cart event btn btn-primary" data-type="stock" data-id="{{ usedCopies.0.id }}">
 							<i class="fa fa-shopping-cart"></i>
 							Ajouter au panier</button>
 					</td>
@@ -163,12 +163,14 @@
 
 				<tr>
 					<td>
-						<a href="{{ stock.cover }}" rel="fancybox"><img src="{{ stock.cover }}" width="50" alt=""></a>
+            {% if stock.hasPhoto() %}
+              <a href="{{ stock.cover }}" rel="fancybox"><img src="{{ stock.cover }}" width="50" alt=""></a>
+            {% endif %}
 					</td>
 					<td>Ref.
 						{{ stock.id }}</td>
-					<td class="orange">{{ stock.condition }}<br>{{ stock.condition_details }}</td>
-					<td>{{ stock.selling_price_euros|raw }}</td>
+					<td class="orange">{{ stock.condition }}<br></td>
+					<td>{{ stock.selling_price|currency(true)|raw }}</td>
 					<td>
 						<button class="add_to_cart event btn btn-primary" data-type="stock" data-id="{{ stock.id }}">
 							<i class="fa fa-shopping-cart"></i>
