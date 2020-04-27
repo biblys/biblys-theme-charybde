@@ -27,8 +27,12 @@
 
 		<div class="col-sm-5 col-xs-6">
 
-			<p>Prix éditeur :
-				{{ article.price|currency(true)|raw }}</p>
+      {% if article.has('price') %}
+        <p>
+          Prix éditeur :
+          {{ article.price|currency(true)|raw }}
+        </p>
+      {% endif %}
 			<p>Collection :
 				<a href="{{article.collection.url}}">{{article.collection.name}}</a>
 			</p>
