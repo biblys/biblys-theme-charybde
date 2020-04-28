@@ -39,7 +39,7 @@
 			<p>Éditeur :
 				<a href="{{article.publisher.url}}">{{article.publisher.name}}</a>
 			</p>
-			<p>{{ article.ean ? 'EAN : ' ~ article.ean }}</p>
+			<p>{{ article.has('ean') ? 'EAN : ' ~ article.ean }}</p>
 			{# article.isbn ? 'ISBN : <p>' ~ article.isbn ~ '</p>' #}
 			<p>{{ article.has('pubdate') ? 'Parution : ' ~ article.pubdate|date('j f Y') }}</p>
 			<p>{{ article.has('pages') ? 'Pagination : ' ~ article.pages ~ ' p.' }}</p>
