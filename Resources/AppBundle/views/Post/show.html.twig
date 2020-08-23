@@ -40,31 +40,31 @@
 					<div class="linkedArticles center">
 						{% for article in post.articles %}
 
-							{% if article.hasCover() %}
-								<article>
+							<article>
+								{% if article.hasCover() %}
 									{{ article.getCoverTag({ class: "selectedCover", size: "w200" })|raw }}
-									<p class="center">
-										{{ article.title }}
-										<br>
-										de
-										{{ article.authors }}<br>
-										ed.
-										{{ article.publisher }}
-									</p>
+								{% endif %}
+								<p class="center">
+									{{ article.title }}
+									<br>
+									de
+									{{ article.authors }}<br>
+									ed.
+									{{ article.publisher.name }}
+								</p>
 
-									<div class="btn-group">
-										<a class="btn btn-default btn-sm pointer add_to_cart event" data-type="article" data-id="{{ article.id }}" title="Ajouter à mon panier">
-											<i class="fa fa-shopping-cart black"></i>
-										</a>
-										<a class="btn btn-default btn-sm pointer event" data-wish="{{article.id}}" title="Ajouter à mes envies">
-											<i class="fa fa-heart-o black"></i>
-										</a>
-										<a class="btn btn-default btn-sm pointer event" data-alert="{{article.id}}" title="Créer une alerte">
-											<i class="fa fa-bell-o black"></i>
-										</a>
-									</div>
-								</article>
-							{% endif %}
+								<div class="btn-group">
+									<a class="btn btn-default btn-sm pointer add_to_cart event" data-type="article" data-id="{{ article.id }}" title="Ajouter à mon panier">
+										<i class="fa fa-shopping-cart black"></i>
+									</a>
+									<a class="btn btn-default btn-sm pointer event" data-wish="{{article.id}}" title="Ajouter à mes envies">
+										<i class="fa fa-heart-o black"></i>
+									</a>
+									<a class="btn btn-default btn-sm pointer event" data-alert="{{article.id}}" title="Créer une alerte">
+										<i class="fa fa-bell-o black"></i>
+									</a>
+								</div>
+							</article>
 
 						{% endfor %}
 					</div>
