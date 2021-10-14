@@ -38,7 +38,7 @@ $ie = 0;
 foreach ($events as $e) {
     $event = '
         <article class="event">
-            <h1><a href="/evenement/' . $e->get('url') . '">' . $e->get('title') . '</a></h1>
+            <h1><a href="/evenements/' . $e->get('url') . '">' . $e->get('title') . '</a></h1>
             <p class="event-infos"><strong>Rendez-vous le ' . _date($e->get('start'), 'd/m/Y à H:i') . '</strong></p>
         </article>
     ';
