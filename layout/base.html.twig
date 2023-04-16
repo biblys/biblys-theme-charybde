@@ -24,6 +24,7 @@
   </head>
 
   <body>
+    {% include "layout:_overall_menu.html.twig" %}
     <div id="wrapper" class="container">
       <header id="header" class="center hidden-print">
         <a href="/" class="hidden-print"
@@ -122,7 +123,6 @@
       </footer>
     </div>
 
-    {{ app.axysMenu|raw }}
     {% include "layout:_assets_js.html.twig" %}
   </body>
 </html>
