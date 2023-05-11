@@ -1,6 +1,11 @@
 <?php
 
+/** @noinspection PhpUnhandledExceptionInspection */
+
+global $_SQL;
+
 use Framework\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 $pm = new PostManager();
 
@@ -9,6 +14,7 @@ $_PAGE_TITLE = "Charybde TV";
 $filter_sql = null;
 $queries = array();
 $params = array();
+$request = Request::createFromGlobals();
 $filter = $request->query->get('filter', false);
 if ($filter) {
     $keywords = explode(" ", $filter);
