@@ -1,28 +1,39 @@
 <?php
 
+/** @noinspection PhpUnhandledExceptionInspection */
+
+use Biblys\Service\Config;
+use Biblys\Service\CurrentSite;
+use Biblys\Service\CurrentUser;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 $em = new EventManager();
 
-$_PAGE_TITLE = 'Prochains évènements';
+$request = Request::createFromGlobals();
+$config = Config::load();
+$currentUserService = CurrentUser::buildFromRequestAndConfig($request, $config);
+$currentSiteService = CurrentSite::buildFromConfig($config);
 
-$_ECHO .= '<h1>'.$_PAGE_TITLE.'</h1>';
+$request->attributes->set("page_title", "Prochains évènements");
 
-if ($_V->isAdmin())
-{
-    $_ECHO .= '<div class="admin">Évènements<p><a href="/pages/events_admin">gérer</a></p><p><a href="/pages/event_edit">nouveau</a></p></div>';
+$content = "<h1>Prochains évènements</h1>";
+
+if ($currentUserService->isAdmin()) {
+    $content .= '<div class="admin">Évènements<p><a href="/pages/events_admin">gérer</a></p><p><a href="/pages/event_edit">nouveau</a></p></div>';
 }
 
-$events = $em->getAll(array('site_id' => $_SITE['site_id']), array('order' => 'event_start'));
+$events = $em->getAll(['site_id' => $currentSiteService->getId()], ['order' => 'event_start']);
 
 $future = array();
 $past = array();
 
-foreach ($events as $e)
-{
+foreach ($events as $e) {
     $event = '
         <article class="event">
             <span class="event-day">'._date($e->get('start'), 'd').'<br>'._date($e->get('start'), 'M').'.</span>
             <p>
-                <a href="/evenements/'.$e->get('url').'">'.$e->get('title').'</a> '.(strstr($e["event_desc"],"youtube") ? '<i class="fa fa-video-camera orange"></i>' : null ).'<br>
+                <a href="/evenements/'.$e->get('url').'">'.$e->get('title').'</a> '.(_isVideoCapturedEvent($e["event_desc"]) ? '<i class="fa fa-video-camera orange"></i>' : null ).'<br>
                 <span class="post-infos">'._date($e->get('start'), 'L d f Y à H:i').'</span>
             </p>
         </article>';
@@ -31,16 +42,14 @@ foreach ($events as $e)
     else $past[_date($e->get('start'),'F Y')][] = $event;
 }
 
-foreach ($future as $month => $events)
-{
-    $_ECHO .= '<h3>'.$month.'</h3>'.implode($events);
+foreach ($future as $month => $events) {
+    $content .= '<h3>'.$month.'</h3>'.implode($events);
 }
 
-$_ECHO .= '<h2>Évènements passés</h2><p><em>Les événements ayant fait l\'objet de captures audio ou vidéo<br /> sont signalés ci-dessous par l\'icône <i class="fa fa-video-camera orange"></i>.</em></p>';
+$content .= '<h2>Évènements passés</h2><p><em>Les événements ayant fait l\'objet de captures audio ou vidéo<br /> sont signalés ci-dessous par l\'icône <i class="fa fa-video-camera orange"></i>.</em></p>';
 
 $ev = null;
-foreach ($past as $month => $events)
-{
+foreach ($past as $month => $events) {
     $evs = null;
     foreach ($events as $e)
     {
@@ -49,4 +58,11 @@ foreach ($past as $month => $events)
     $ev = '<h3>'.$month.'</h3>'.$evs.$ev;
 }
 
-$_ECHO .= $ev;
+$content .= $ev;
+
+return new Response($content);
+
+function _isVideoCapturedEvent(?string $eventDescription): bool
+{
+    return $eventDescription !== null && str_contains($eventDescription, "youtube");
+}
