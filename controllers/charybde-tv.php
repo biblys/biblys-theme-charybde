@@ -1,10 +1,11 @@
 <?php
 
+use Framework\Controller;
+
 $pm = new PostManager();
 
 $_PAGE_TITLE = "Charybde TV";
 
-// Filtering
 $filter_sql = null;
 $queries = array();
 $params = array();
@@ -32,6 +33,8 @@ $posts = $_SQL->prepare('SELECT post_url, post_title, post_date,
 $posts->execute($params);
 $posts = $posts->fetchAll(PDO::FETCH_ASSOC);
 
-$html = get_template('charybde-tv', array('posts' => $posts, 'filter' => $filter));
-
-$_ECHO .= '<h1>'.$_PAGE_TITLE.'</h1>'.$html;
+$controller = new Controller();
+return $controller->render(
+    "AppBundle:Post:charybde-tv.html.twig",
+    ['posts' => $posts, 'filter' => $filter]
+);

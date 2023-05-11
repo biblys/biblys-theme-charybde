@@ -1,0 +1,29 @@
+<p>Retrouvez sur Charybde TV tous les évènements de Charybde en vidéo.</p>
+
+<form>
+    <fieldset class="text-center">
+        <input type="search" name="filter" placeholder="Rechercher dans les vidéos par invité, livre, éditeur..." value="{{ filter }}" class="verylong">
+        <button type="submit" class="btn btn-primary btn-sm">Rechercher</button>
+    </fieldset>
+</form>
+
+<table class="table">
+    <thead>
+        <th>Vidéo</th>
+        <th style="width: 35%">Invités</th>
+        <th>Enregistrée&nbsp;le</th>
+    </thead>
+    <tbody>
+        
+        {% for post in posts %}
+
+            <tr>
+                <td><a href="/blog/{{ post.post_url }}">{{ post.post_title }}</a></td>
+                <td>{{ post.people }}</td>
+                <td class="text-center">{{ post.post_date|date('d/m/Y') }}</td>
+            </tr>
+            
+        {% endfor %}
+        
+    </tbody>
+</table>
