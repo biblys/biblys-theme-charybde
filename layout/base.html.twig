@@ -8,7 +8,7 @@
       {% if titleBlock is not empty %}
         {% block title %}{% endblock %} |
       {% endif %}
-      {{ app.site.title }}
+      {{ app.currentSite.title }}
     </title>
     <meta name="viewport" content="width=device-width" />
     <link rel="shortcut icon" type="image/png" href="/theme//favicon.png" />
@@ -16,7 +16,7 @@
     {# biblys assets #}
     {% include "layout:_assets_css.html.twig" %}
 
-    <link rel="stylesheet" href="/theme/styles.css?{{ app.site.getOpt('assets_version') }}" />
+    <link rel="stylesheet" href="/theme/styles.css?{{ app.currentSite.getOption('assets_version') }}" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
