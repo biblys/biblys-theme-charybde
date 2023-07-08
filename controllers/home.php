@@ -1,8 +1,14 @@
-<?php
+<?php /** @noinspection PhpUnhandledExceptionInspection */
+
+global $_SQL;
+
+use Biblys\Service\Config;
+use Biblys\Service\CurrentSite;
+use Symfony\Component\HttpFoundation\Response;
 
 $em = new EventManager();
 
-$blog = null;
+$blog = [];
 
 /* HEADLINE POST */
 
@@ -15,8 +21,11 @@ $query = "SELECT `post_id`, `post_title`, `post_url`, `post_content`, `post_date
     WHERE `posts`.`site_id` = :site_id AND `post_date` <= NOW() AND `post_status` = 1 AND `post_selected` = 1 AND `category_id` != 3 AND `category_id` != 45
     ORDER BY `post_date` DESC LIMIT 3";
 
+$config = Config::load();
+$currentSite = CurrentSite::buildFromConfig($config);
+
 $posts = $_SQL->prepare($query);
-$posts->execute(array('site_id' => $_SITE['site_id']));
+$posts->execute(['site_id' => $currentSite->getId()]);
 $posts = $posts->fetchAll(PDO::FETCH_ASSOC);
 
 foreach ($posts as $p) {
@@ -32,8 +41,8 @@ foreach ($posts as $p) {
 
 /* NEXT EVENTS */
 
-$calendar = array();
-$events = $em->getAll(array('site_id' => $_SITE['site_id'], 'event_start' => '> ' . date('Y-m-d H:i:s')), array('order' => 'event_start', 'limit' => 3), false);
+$calendar = [];
+$events = $em->getAll(array('site_id' => $currentSite->getId(), 'event_start' => '> ' . date('Y-m-d H:i:s')), array('order' => 'event_start', 'limit' => 3), false);
 $ie = 0;
 foreach ($events as $e) {
     $event = '
@@ -50,15 +59,15 @@ foreach ($events as $e) {
     }
 }
 
-/* COUPS DE COEUR */
+/* COUPS DE CŒUR */
 
-// Derniers coup de coeur
+// Derniers coups de cœur
 $posts = $_SQL->query("SELECT `post_url`, `post_content`, `article_id`, `article_url`, `article_title`, `article_authors`, `article_publisher`
     FROM `articles`
     JOIN `links` USING(`article_id`)
     JOIN `posts` USING(`post_id`)
     WHERE `post_date` < NOW() AND `post_status` = 1 AND `posts`.`category_id` = 3
-    GROUP BY `article_id`
+    GROUP BY `article_id`, `post_url`, `post_content`, `post_date`, `article_url`, `article_title`, `article_authors`, `article_publisher`
     ORDER BY `post_date` DESC
 LIMIT 4");
 $selection = array();
@@ -75,7 +84,7 @@ while ($p = $posts->fetch(PDO::FETCH_ASSOC)) {
     if ($media->exists())
         $selection[] = '
         <a href="/blog/' . $p["post_url"] . '" class="va-text-bottom">
-            <img width="' . $size . '" src="' . $media->url('w' . $size) . '" alt="' . $p["article_title"] . '" title="' . $p["article_title"] . ' de ' . $p["article_authors"] . ' (' . $p["article_publisher"] . ')">
+            <img width="' . $size . '" src="' . $media->getUrl(["size" => "w".$size]) . '" alt="' . $p["article_title"] . '" title="' . $p["article_title"] . ' de ' . $p["article_authors"] . ' (' . $p["article_publisher"] . ')">
         </a>' . $text;
     $ip++;
 }
@@ -97,15 +106,14 @@ while ($a = $articles->fetch(PDO::FETCH_ASSOC)) {
     if ($media->exists()) {
         $recents[] = '
         <a href="/' . $a["article_url"] . '" class="va-text-bottom">
-            <img width="60" src="' . $media->url('w60') . '" alt="' . $a["article_title"] . '" title="' . $a["article_title"] . ' de ' . $a["article_authors"] . ' (' . $a["article_publisher"] . ')">
-        </a>';
+            <img width="60" src="' . $media->getUrl(["size" => "w60"]) . '" alt="' . $a["article_title"] . '" title="' . $a["article_title"] . ' de ' . $a["article_authors"] . ' (' . $a["article_publisher"] . ')"> </a>';
         $ir++;
     }
     if ($ir >= 9) break;
 }
 
 
-$_ECHO .= '
+$content = '
 
     <div class="row">
 
@@ -134,3 +142,5 @@ $_ECHO .= '
 
     </div>
 ';
+
+return new Response($content);
