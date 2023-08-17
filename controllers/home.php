@@ -13,11 +13,9 @@ $blog = [];
 /* HEADLINE POST */
 
 $query = "SELECT `post_id`, `post_title`, `post_url`, `post_content`, `post_date`, `post_update`,
-        `category_name`, `category_url`,
-        `user_screen_name`, `user_slug`
+        `category_name`, `category_url`
     FROM `posts`
     LEFT JOIN `categories` USING(`category_id`)
-    LEFT JOIN `users` ON `user_id` = `users`.`id`
     WHERE `posts`.`site_id` = :site_id AND `post_date` <= NOW() AND `post_status` = 1 AND `post_selected` = 1 AND `category_id` != 3 AND `category_id` != 45
     ORDER BY `post_date` DESC LIMIT 3";
 
