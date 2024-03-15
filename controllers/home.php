@@ -103,7 +103,7 @@ while ($a = $articles->fetch(PDO::FETCH_ASSOC)) {
     $media = new Media('article', $a['article_id']);
     if ($media->exists()) {
         $recents[] = '
-        <a href="/' . $a["article_url"] . '" class="va-text-bottom">
+        <a href="/a/' . $a["article_url"] . '" class="va-text-bottom">
             <img width="60" src="' . $media->getUrl(["size" => "w60"]) . '" alt="' . $a["article_title"] . '" title="' . $a["article_title"] . ' de ' . $a["article_authors"] . ' (' . $a["article_publisher"] . ')"> </a>';
         $ir++;
     }
