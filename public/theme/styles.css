@@ -3,7 +3,7 @@
 body {
   font-family: 'Anaheim', serif;
   font-size: 16px;
-  background: url('/public/theme/background.png');
+  background: url('/theme/background.png');
 }
 
 .charybde-border {
