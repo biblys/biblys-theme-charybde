@@ -41,10 +41,10 @@
 					</p>
 				{% endif %}
 				<p>Collection :
-					<a href="{{article.collection.url}}">{{article.collection.name}}</a>
+					<a href="/collection/{{article.collection.url}}">{{article.collection.name}}</a>
 				</p>
 				<p>Éditeur :
-					<a href="{{article.publisher.url}}">{{article.publisher.name}}</a>
+					<a href="/editeur/{{article.publisher.url}}">{{article.publisher.name}}</a>
 				</p>
 				<p>{{ article.has('ean') ? 'EAN : ' ~ article.ean }}</p>
 				{# article.isbn ? 'ISBN : <p>' ~ article.isbn ~ '</p>' #}
