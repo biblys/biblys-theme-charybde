@@ -121,8 +121,7 @@
 			{% for post in article.posts|filter(post => post) %}
 
 				<article class="charybde-border">
-					<h2>Coup de coeur de
-						<a href="/blog/{{ post.author.slug }}">{{ post.author.screen_name }}</a>
+					<h2>Coup de cœur</a>
 					</h2>
 					{% if post.has('content') %}
 						{{ post.content|raw }}
