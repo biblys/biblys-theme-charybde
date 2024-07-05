@@ -18,15 +18,9 @@
 			{{ post.date|date('d/m/Y') }}
 			{% if post.has('category') and post.category_id == 54 %}
 				&nbsp;
-				<i class="fa fa-user"></i>
-				<a href="/blog/author/{{ post.author.slug }}/?category={{ post.category.url }}">{{ post.author.screen_name }}</a>
-				&nbsp;
 				<i class="fa fa-folder"></i>
 				<a href="/pages/charybde-tv">{{ post.category.name }}</a>
 			{% elseif post.has('category') %}
-				&nbsp;
-				<i class="fa fa-user"></i>
-				<a href="/blog/author/{{ post.author.slug }}/?category={{ post.category.url }}">{{ post.author.screen_name }}</a>
 				&nbsp;
 				<i class="fa fa-folder"></i>
 				<a href="/blog/{{ post.category.url }}/">{{ post.category.name }}</a>
