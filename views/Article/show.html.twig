@@ -172,11 +172,7 @@
 				{% for stock in usedCopies %}
 
 					<tr>
-						<td>
-							{% if stock.hasPhoto() %}
-								<a href="{{ stock.cover }}" rel="fancybox"><img src="{{ stock.cover }}" width="50" alt=""></a>
-							{% endif %}
-						</td>
+						<td></td>
 						<td>Ref.
 							{{ stock.id }}</td>
 						<td class="orange">{{ stock.condition }}<br></td>
