@@ -25,7 +25,6 @@
 
   <body>
     {% include "layout:_overall_menu.html.twig" %}
-    {% include "layout:_flash_messages.html.twig" %}
     <div id="wrapper" class="container">
       <header id="header" class="center hidden-print">
         <a href="/" class="hidden-print"
@@ -70,6 +69,8 @@
 
       <div class="row">
         <section id="main" class="container col-md-9">
+          {% include "layout:_flash_messages.html.twig" %}
+
           {% block main %}{% endblock %}
         </section>
 
