@@ -24,7 +24,12 @@ return function (Request $request, CurrentSite $currentSiteService, CurrentUser 
         $content .= '<div class="admin">Évènements<p><a href="/pages/events_admin">gérer</a></p><p><a href="/pages/event_edit">nouveau</a></p></div>';
     }
 
-    $events = $em->getAll(['site_id' => $currentSiteService->getId()], ['order' => 'event_start']);
+    $events = $em->getAll([
+        "site_id" => $currentSiteService->getId(),
+        "event_status" => 1,
+    ], [
+        "order" => "event_start"
+    ]);
 
     $future = array();
     $past = array();
