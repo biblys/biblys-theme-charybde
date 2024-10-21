@@ -47,7 +47,7 @@ return function (Request $request, CurrentSite $currentSiteService, CurrentUser 
         $content .= '<h3>' . $month . '</h3>' . implode($events);
     }
 
-    $content .= '<h2>Évènements passés</h2><p><em>Les événements ayant fait l\'objet de captures audio ou vidéo<br /> sont signalés ci-dessous par l\'icône <i class="fa fa-video-camera orange"></i>.</em></p>';
+    $content .= '<h2>Évènements passés</h2><p><em>Les événements ayant fait l’objet de captures audio ou vidéo<br /> sont signalés ci-dessous par l’icône <i class="fa fa-video-camera orange"></i>.</em></p>';
 
     $ev = null;
     foreach ($past as $month => $events) {

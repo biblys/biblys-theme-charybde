@@ -8,7 +8,7 @@
 
 	$_ECHO = '
 		<h2>'.$_PAGE_TITLE.'</h2>
-		<p>Une porte vers la troisième pièce : découvrez tous nos livres d\'occasion. Chaque exemplaire est photographié individuellement pour vous permettre de mieux apprécier son état.</p>
+		<p>Une porte vers la troisième pièce : découvrez tous nos livres d’occasion. Chaque exemplaire est photographié individuellement pour vous permettre de mieux apprécier son état.</p>
 		<br>
     ';
 	

@@ -124,7 +124,7 @@ $content = '
         </div>
 
         <div class="col-sm-4">
-            <h2 class="right">L\'actu de la librairie</h2>
+            <h2 class="right">L’actu de la librairie</h2>
             ' . implode($blog) . '
 
             <h2 class="right">Nos derniers<br>coups de coeur</h2>
