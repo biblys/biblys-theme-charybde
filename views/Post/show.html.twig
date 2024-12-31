@@ -42,8 +42,13 @@
 							{% for article in post.articles %}
 
 								<article>
-									{% if article.hasCover() %}
-										{{ article.getCoverTag({ class: "selectedCover", size: "w200" })|raw }}
+									{% if article.model|hasImage %}
+										{% include "AppBundle:Article:_cover.html.twig" with {
+											article: article.model,
+											class: "selectedCover",
+											width: 200,
+											link: path("article_show", { slug: article.url })
+										} %}
 									{% endif %}
 									<p class="center">
 										{{ article.title }}
@@ -148,11 +153,14 @@
 
 						<article>
 
-							{% if article.hasCover() %}
+							{% if article.hasImage %}
 								<p>
-									<a href="/{{ article.url }}" title="{{ article.title }} de {{ article.authors }}">
-										<img src="{{ article.getCover('object').url('h150') }}" alt="{{ article.title }}" height="150">
-									</a>
+									{% include "AppBundle:Article:_cover.html.twig" with {
+										article: article.model,
+										class: "selectedCover",
+										height: "15O",
+										link: path("article_show", { slug: article.url })
+									} %}
 								</p>
 							{% endif %}
 							<div class="btn-group">

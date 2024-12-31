@@ -24,10 +24,15 @@
 
 		<div class="row">
 
-			{% if article.hasCover %}
+			{% if article.model|hasImage %}
 
 				<div class="col-sm-3 col-xs-6 center">
-					{{ article.coverTag({ size: 'w200', class: 'cover' })|raw }}
+					{% include "AppBundle:Article:_cover.html.twig" with {
+						article: article.model,
+						class: "cover",
+						width: 200,
+						rel: "lightbox"
+					} %}
 				</div>
 
 			{% endif %}
