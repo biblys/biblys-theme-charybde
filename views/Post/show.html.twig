@@ -153,7 +153,7 @@
 
 						<article>
 
-							{% if article.hasImage %}
+							{% if article.model|hasImage %}
 								<p>
 									{% include "AppBundle:Article:_cover.html.twig" with {
 										article: article.model,
