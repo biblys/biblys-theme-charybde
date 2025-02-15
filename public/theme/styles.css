@@ -120,11 +120,23 @@ section#main {
   background-color: white;
 }
 
-#wrapper > footer {
+#footer {
   border-top: 5px dashed rgba(255, 102, 0, 0.25);
   background-color: white;
+  font-size: 0.8em;
+  margin: 0 -15px;
   padding: 15px;
   text-align: center;
+  width: 100%;
+}
+
+#footer .footer-credits a {
+  background: #ff6600;
+  border-radius: 4px;
+  color: white;
+  display: inline-block;
+  padding: 2px 4px;
+  text-decoration: none;
 }
 
 /* POST */
