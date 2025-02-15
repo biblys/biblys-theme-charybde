@@ -26,28 +26,27 @@
   <body>
     {% include "layout:_overall_menu.html.twig" %}
     <div id="wrapper" class="container">
-      <header id="header" class="center hidden-print">
-        <a href="/" class="hidden-print"
+      <header id="header" class="center d-print-none">
+        <a href="/" class="d-print-none"
           ><img src="/theme//header.png" alt="Librairie Charybde"
         /></a>
       </header>
 
-      <div id="searchBox" class="hidden-print">
-        <form action="/pages/search" id="search">
-          <fieldset>
-            <input
-              type="text"
-              placeholder="Titre, auteur, éditeur, ISBN, mot-clé..."
-              name="q"
-              value=""
-            />
-            <button class="btn btn-default btn-sm" type="submit">Recherche</button>
-            <span id="myCart"
-              ><button class="btn btn-default btn-sm">
-                <i class="fa fa-shopping-cart"></i> Panier vide
-              </button></span
-            >
-          </fieldset>
+      <div id="searchBox" class="d-print-none">
+        <form class="form-inline" action="/pages/search" class="text-center">
+          <input
+            type="text"
+            class="form-control mr-sm-2"
+            placeholder="Titre, auteur, éditeur, ISBN, mot-clé..."
+            name="q"
+            aria-label="Rechercher"
+          />
+
+          <button type="submit" class="btn btn-light mr-2">Recherche</button>
+          <span id="myCart">
+            {{ cart_status()|raw }}
+          </span>
+
         </form>
       </div>
 
@@ -63,7 +62,7 @@
         <a href="/pages/parutions">Parutions</a>
         <a href="/pages/occasions">Occasions</a>
         <a href="/pages/librairie">La librairie</a>
-        <a href="/pages/informations-pratiques" class="hidden-lg hidden-md">Infos pratiques</a>
+        <a href="/pages/informations-pratiques" class="d-block d-md-none">Infos pratiques</a>
         <a href="/contact/">Contact</a>
       </nav>
 
@@ -75,7 +74,7 @@
         </section>
 
         <aside class="col-md-3 visible-lg visible-md">
-          <section id="infos" class="container-fluid hidden-print">
+          <section id="infos" class="container-fluid d-print-none">
             <h3>Librairie Charybde</h3>
             <p>Ground Control</p>
             <p>
@@ -118,7 +117,7 @@
         </aside>
       </div>
 
-      <footer class="row hidden-print">
+      <footer class="row d-print-none">
         <a href="http://www.biblys.fr/"
           ><img src="/theme//biblys.png" alt="Propulsé par Biblys"
         /></a>

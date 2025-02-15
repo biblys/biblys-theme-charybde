@@ -75,7 +75,7 @@ while ($p = $posts->fetch(PDO::FETCH_ASSOC)) {
     $text = null;
     if ($ip == 0) {
         $size = 180;
-        $text = '<p>' . truncate(strip_tags($p['post_content']), 300, '...', true) . '<br><a href="/blog/' . $p['post_url'] . '" class="btn btn-default btn-sm">Lire la suite <i class="fa fa-chevron-right"></i></a></p>';
+        $text = '<p>' . truncate(strip_tags($p['post_content']), 300, '...', true) . '<br><a href="/blog/' . $p['post_url'] . '" class="btn btn-secondary-outline btn-sm">Lire la suite <i class="fa fa-chevron-right"></i></a></p>';
     }
 
     $media = new Media('article', $p['article_id']);

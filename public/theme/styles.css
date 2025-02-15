@@ -229,8 +229,9 @@ article.event {
   margin: 15px 0;
 }
 
-#searchBox fieldset {
-  text-align: center;
+#searchBox form {
+  display: flex;
+  justify-content: center;
 }
 
 #searchBox img {
