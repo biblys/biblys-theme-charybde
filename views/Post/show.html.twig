@@ -14,19 +14,19 @@
 			<a href="/blog/{{ post.url }}">{{ post.title }}</a>
 		</h1>
 		<p class="post-infos">
-			<i class="fa fa-clock-o"></i>
+			<i class="fa-solid fa-clock"></i>
 			{{ post.date|date('d/m/Y') }}
 			{% if post.has('category') and post.category_id == 54 %}
 				&nbsp;
-				<i class="fa fa-folder"></i>
+				<i class="fa-solid fa-folder"></i>
 				<a href="/pages/charybde-tv">{{ post.category.name }}</a>
 			{% elseif post.has('category') %}
 				&nbsp;
-				<i class="fa fa-folder"></i>
+				<i class="fa-solid fa-folder"></i>
 				<a href="/blog/{{ post.category.url }}/">{{ post.category.name }}</a>
 			{% elseif post.has('author') %}
 				&nbsp;
-				<i class="fa fa-user"></i>
+				<i class="fa-solid fa-user"></i>
 				<a href="/blog/author/{{ post.author.slug }}/">{{ post.author.screen_name }}</a>
 			{% endif %}
 		</p>
@@ -61,13 +61,13 @@
 
 									<div class="btn-group">
 										<a class="btn btn-secondary-outline btn-sm pointer add_to_cart event" data-type="article" data-id="{{ article.id }}" title="Ajouter à mon panier">
-											<i class="fa fa-shopping-cart black"></i>
+											<i class="fa-solid fa-basket-shopping black"></i>
 										</a>
 										<a class="btn btn-secondary-outline btn-sm pointer event" data-wish="{{article.id}}" title="Ajouter à mes envies">
-											<i class="fa fa-heart-o black"></i>
+											<i class="fa-solid fa-heart black"></i>
 										</a>
 										<a class="btn btn-secondary-outline btn-sm pointer event" data-alert="{{article.id}}" title="Créer une alerte">
-											<i class="fa fa-bell-o black"></i>
+											<i class="fa-solid fa-bell black"></i>
 										</a>
 									</div>
 								</article>
@@ -165,13 +165,13 @@
 							{% endif %}
 							<div class="btn-group">
 								<a class="btn btn-secondary-outline btn-sm pointer add_to_cart event" data-type="article" data-id="{{ article.id }}" title="Ajouter à mon panier">
-									<i class="fa fa-shopping-cart black"></i>
+									<i class="fa-solid fa-basket-shopping black"></i>
 								</a>
 								<a class="btn btn-secondary-outline btn-sm pointer event" data-wish="{{article.id}}" title="Ajouter à mes envies">
-									<i class="fa fa-heart-o black"></i>
+									<i class="fa-solid fa-heart black"></i>
 								</a>
 								<a class="btn btn-secondary-outline btn-sm pointer event" data-alert="{{article.id}}" title="Créer une alerte">
-									<i class="fa fa-bell-o black"></i>
+									<i class="fa-solid fa-bell black"></i>
 								</a>
 							</div>
 						</article>

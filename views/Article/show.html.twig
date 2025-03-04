@@ -94,10 +94,10 @@
 					<p class="center">
 						<button data-wish="{{article.id}}" class="event" title="Partagez votre liste d'envies pour vous faire offrir des livres !">
 							{% if article.isInWishlist() %}
-								<i class="fa fa-heart red"></i>
+								<i class="fa-solid fa-heart red"></i>
 								Dans mes envies
 							{% else %}
-								<i class="fa fa-heart-o"></i>
+								<i class="fa-regular fa-heart"></i>
 								Ajouter à mes envies
 							{% endif %}
 						</button>
@@ -106,10 +106,10 @@
 					<p class="center">
 						<button data-alert="{{article.id}}" class="event" title="Soyez averti par e-mail quand d'autres exemplaires sont disponibles.">
 							{% if article.isInAlerts() %}
-								<i class="fa fa-bell orange"></i>
+								<i class="fa-solid fa-bell orange"></i>
 								Dans mes alertes
 							{% else %}
-								<i class="fa fa-bell-o"></i>
+								<i class="fa-regular fa-bell"></i>
 								Créer une alerte
 							{% endif %}
 						</button>
@@ -167,7 +167,7 @@
 						<td>{{ usedCopies.0.selling_price|currency(true)|raw }}</td>
 						<td>
 							<button class="add_to_cart event btn btn-primary" data-type="stock" data-id="{{ usedCopies.0.id }}">
-								<i class="fa fa-shopping-cart"></i>
+								<i class="fa-solid fa-basket-shopping"></i>
 								Ajouter au panier</button>
 						</td>
 					</tr>
@@ -184,7 +184,7 @@
 						<td>{{ stock.selling_price|currency(true)|raw }}</td>
 						<td>
 							<button class="add_to_cart event btn btn-primary" data-type="stock" data-id="{{ stock.id }}">
-								<i class="fa fa-shopping-cart"></i>
+								<i class="fa-solid fa-basket-shopping"></i>
 								Ajouter au panier</button>
 						</td>
 					</tr>
