@@ -2,20 +2,18 @@
 
 use Biblys\Service\CurrentSite;
 use Biblys\Service\CurrentUser;
-use Biblys\Service\InvalidSiteIdException;
+use Model\EventQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Exception\PropelException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @throws InvalidDateFormatException
- * @throws InvalidSiteIdException
  * @throws PropelException
  */
 return function (Request $request, CurrentSite $currentSiteService, CurrentUser $currentUserService): Response
 {
-    $em = new EventManager();
-
     $request->attributes->set("page_title", "Prochains évènements");
 
     $content = "<h1>Prochains évènements</h1>";
@@ -24,28 +22,32 @@ return function (Request $request, CurrentSite $currentSiteService, CurrentUser 
         $content .= '<div class="admin">Évènements<p><a href="/pages/events_admin">gérer</a></p><p><a href="/pages/event_edit">nouveau</a></p></div>';
     }
 
-    $events = $em->getAll([
-        "site_id" => $currentSiteService->getId(),
-        "event_status" => 1,
-    ], [
-        "order" => "event_start"
-    ]);
+    $events = EventQuery::create()
+        ->orderByStart()
+        ->findByStatus(1)
+        ->getData();
 
     $future = array();
     $past = array();
 
-    foreach ($events as $e) {
-        $event = '
-        <article class="event">
-            <span class="event-day">' . _date($e->get('start'), 'd') . '<br>' . _date($e->get('start'), 'M') . '.</span>
-            <p>
-                <a href="/evenements/' . $e->get('url') . '">' . $e->get('title') . '</a> ' . (_isVideoCapturedEvent($e["event_desc"]) ? '<i class="fa-solid fa-video"></i>' : null) . '<br>
-                <span class="post-infos">' . _date($e->get('start'), 'L d f Y à H:i') . '</span>
-            </p>
-        </article>';
+    /** @var \Model\Event $event */
+    foreach ($events as $event) {
+        $eventStartDate = $event->getStart();
+        $eventHtml = '
+            <article class="event">
+                <span class="event-day">' . _date($eventStartDate, 'd') . '<br>' . _date($eventStartDate, 'M') . '.</span>
+                <p>
+                    <a href="/evenements/' . $event->getUrl() . '">' . $event->getTitle() . '</a> ' . (_isVideoCapturedEvent($event->getDesc()) ? '<i class="fa-solid fa-video"></i>' : null) . '<br>
+                    <span class="post-infos">' . _date($eventStartDate, 'L d f Y à H:i') . '</span>
+                </p>
+            </article>
+        ';
 
-        if ($e->get('start') > date('Y-m-d H:i:s')) $future[_date($e->get('start'), 'F Y')][] = $event;
-        else $past[_date($e->get('start'), 'F Y')][] = $event;
+        if ($eventStartDate > new DateTime()) {
+            $future[_date($eventStartDate, 'F Y')][] = $eventHtml;
+        } else {
+            $past[_date($eventStartDate, 'F Y')][] = $eventHtml;
+        }
     }
 
     foreach ($future as $month => $events) {

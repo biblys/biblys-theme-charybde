@@ -16,14 +16,14 @@ $query = "SELECT `post_id`, `post_title`, `post_url`, `post_content`, `post_date
         `category_name`, `category_url`
     FROM `posts`
     LEFT JOIN `categories` USING(`category_id`)
-    WHERE `posts`.`site_id` = :site_id AND `post_date` <= NOW() AND `post_status` = 1 AND `post_selected` = 1 AND `category_id` != 3 AND `category_id` != 45
+    WHERE `post_date` <= NOW() AND `post_status` = 1 AND `post_selected` = 1 AND `category_id` != 3 AND `category_id` != 45
     ORDER BY `post_date` DESC LIMIT 3";
 
 $config = Config::load();
 $currentSite = CurrentSite::buildFromConfig($config);
 
 $posts = $_SQL->prepare($query);
-$posts->execute(['site_id' => $currentSite->getId()]);
+$posts->execute();
 $posts = $posts->fetchAll(PDO::FETCH_ASSOC);
 
 foreach ($posts as $p) {
@@ -40,7 +40,7 @@ foreach ($posts as $p) {
 /* NEXT EVENTS */
 
 $calendar = [];
-$events = $em->getAll(array('site_id' => $currentSite->getId(), 'event_start' => '> ' . date('Y-m-d H:i:s')), array('order' => 'event_start', 'limit' => 3), false);
+$events = $em->getAll(array('event_start' => '> ' . date('Y-m-d H:i:s')), array('order' => 'event_start', 'limit' => 3), false);
 $ie = 0;
 foreach ($events as $e) {
     $event = '
@@ -92,7 +92,7 @@ while ($p = $posts->fetch(PDO::FETCH_ASSOC)) {
 $articles = $_SQL->query("SELECT `article_id`, `article_title`, `article_authors`, `article_publisher`, `article_url`
     FROM `articles`
     JOIN `stock` USING(`article_id`)
-    WHERE `article_pubdate` < NOW() AND `article_availability` = 1 AND `stock`.`site_id` = 5
+    WHERE `article_pubdate` < NOW() AND `article_availability` = 1
     GROUP BY `article_id`
     ORDER BY `article_pubdate` DESC
 LIMIT 15");
